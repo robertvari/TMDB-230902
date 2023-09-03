@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Controls.Material
-
+import "qml_components"
 
 ApplicationWindow{
     visible: true
@@ -17,42 +17,19 @@ ApplicationWindow{
         anchors.fill: parent
         spacing: 0
 
-        Rectangle{
-            color: "#032541"
-            Layout.fillWidth: true
-            height: 64
+        Navbar{Layout.fillWidth: true}
 
-            Label{
-                text: "Navbar..."
-                color: "white"
-            }
-        }
-
-        Rectangle{
-            color: "lightGreen"
+        Item{
             Layout.fillHeight: true
             Layout.fillWidth: true
- 
-            Label{text: "Content..."}
 
             RowLayout{
                 anchors.fill: parent
                 anchors.leftMargin: 200
                 anchors.rightMargin: 200
 
-                Rectangle{
-                    color: "lightGray"
-                    width: 258
-                    Layout.fillHeight: true
-                    Label{text: "Filter box"}
-                }
-
-                Rectangle{
-                    color: "lightBlue"
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    Label{text: "Movie list view"}
-                }
+                Sidebar{Layout.fillHeight: true}
+                MovieListView{Layout.fillWidth: true; Layout.fillHeight: true}
             }
         }
     }
