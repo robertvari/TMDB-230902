@@ -15,6 +15,27 @@ ApplicationWindow{
 
     ColumnLayout{
         anchors.fill: parent
-        anchors.margins: 20
+        spacing: 0
+
+        Rectangle{
+            color: "#032541"
+            Layout.fillWidth: true
+            height: 64
+
+            Label{
+                text: "Navbar..."
+                color: "white"
+            }
+        }
+
+        Rectangle{
+            color: "lightGreen"
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            Label{
+                text: "Content..."
+            }
+        }
     }
 }
