@@ -1,13 +1,17 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
+import "custom_components"
 
 
 Rectangle{
     color: "#032541"
     height: 64
 
-    Label{
-        text: "Navbar..."
-        color: "white"
+    RowLayout{
+        TextButton{text: "Movies"}
+        TextButton{text: "TV Shows"}
+        TextButton{text: "People"}
+        TextButton{text: "More"}
     }
 }
