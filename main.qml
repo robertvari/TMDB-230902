@@ -32,9 +32,27 @@ ApplicationWindow{
             color: "lightGreen"
             Layout.fillHeight: true
             Layout.fillWidth: true
+ 
+            Label{text: "Content..."}
 
-            Label{
-                text: "Content..."
+            RowLayout{
+                anchors.fill: parent
+                anchors.leftMargin: 200
+                anchors.rightMargin: 200
+
+                Rectangle{
+                    color: "lightGray"
+                    width: 258
+                    Layout.fillHeight: true
+                    Label{text: "Filter box"}
+                }
+
+                Rectangle{
+                    color: "lightBlue"
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    Label{text: "Movie list view"}
+                }
             }
         }
     }
