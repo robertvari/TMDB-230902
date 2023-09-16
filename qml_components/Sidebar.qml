@@ -1,32 +1,72 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Controls.Material
 import "custom_components"
 
 Item{
     width: 258
 
-    RoundedBox{
-        width: parent.width
-        height: childrenRect.height + 20
+    ColumnLayout{ 
+        anchors.fill: parent  
 
-        ColumnLayout{
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.margins: 10
+        RoundedBox{
+            width: parent.width
+            height: childrenRect.height + 20
 
-            TitleText{text: "Search & Filter"}
+            ColumnLayout{
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.margins: 10
 
-            // Input field for search.
-            IconTextField{
-                placeholderText: "Search..."
-                icon: "../../resources/search_icon.svg"
-                Layout.fillWidth: true
+                TitleText{text: "Search & Filter"}
+
+                // Input field for search.
+                IconTextField{
+                    placeholderText: "Search..."
+                    icon: "../../resources/search_icon.svg"
+                    Layout.fillWidth: true
+                }
+
+                // ComboBox for sorting
+                ComboBox{
+                    model: ["Popularity Descending", "Popularity Ascending", "Rating Descending", "Rating Ascending", "Release Date Descending", "Release Date Ascending", "Title (A-Z)", "Title (Z-A)"]
+                    Layout.fillWidth: true
+                }
+
+                // Genre filters
             }
-            // ComboBox for sorting
-            // Genre filters
+        }
+
+        RoundedBox{
+            width: parent.width
+            height: childrenRect.height + 20
+
+            ColumnLayout{
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.margins: 10
+
+                TitleText{text: "Genres"}
+                // Genre filters
+
+                Repeater{
+                    model: ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy"]
+
+                    TextButton{
+                        text: modelData
+                        color: "black"
+                        font.bold: false
+                        font.pixelSize: 16
+                    }
+                }
+            }
+        }
+
+        Item{
+            Layout.fillHeight: true
         }
     }
-
 }
