@@ -1,4 +1,5 @@
 import QtQuick
+import Qt5Compat.GraphicalEffects
 
 Rectangle{
     radius: 10
