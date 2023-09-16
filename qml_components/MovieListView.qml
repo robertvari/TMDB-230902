@@ -1,10 +1,18 @@
 import QtQuick
-import QtQuick.Controls
+import "custom_components"
 
-Rectangle{
-    color: "lightBlue"
-    Label{
-        text: "Movie list view"
-        color: "black"
+Item{
+    GridView{
+        id: grid_view
+        anchors.fill: parent
+        cellWidth: 184
+        cellHeight: 386
+        model: 50
+        clip: true
+
+        delegate: MovieCard{
+            width: grid_view.cellWidth - 10
+            height: grid_view.cellHeight - 10
+        }
     }
 }
