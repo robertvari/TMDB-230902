@@ -20,7 +20,7 @@ Item{
                 anchors.top: parent.top
                 anchors.margins: 10
 
-                TitleText{text: "Search & Filter"}
+                TitleText{text: "Search"}
 
                 // Input field for search.
                 IconTextField{
@@ -28,14 +28,26 @@ Item{
                     icon: "../../resources/search_icon.svg"
                     Layout.fillWidth: true
                 }
+            }
+        }
 
+        RoundedBox{
+            width: parent.width
+            height: childrenRect.height + 20
+
+            ColumnLayout{
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.margins: 10
+
+                TitleText{text: "Sort"}
+                
                 // ComboBox for sorting
                 ComboBox{
                     model: ["Popularity Descending", "Popularity Ascending", "Rating Descending", "Rating Ascending", "Release Date Descending", "Release Date Ascending", "Title (A-Z)", "Title (Z-A)"]
                     Layout.fillWidth: true
                 }
-
-                // Genre filters
             }
         }
 
