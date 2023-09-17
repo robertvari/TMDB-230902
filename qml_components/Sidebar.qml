@@ -25,7 +25,7 @@ Item{
                 // Input field for search.
                 IconTextField{
                     placeholderText: "Search..."
-                    icon: "../../resources/search_icon.svg"
+                    icon: "search_icon.svg"
                     Layout.fillWidth: true
                 }
             }

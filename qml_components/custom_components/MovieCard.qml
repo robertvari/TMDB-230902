@@ -12,7 +12,7 @@ Item{
 
         Image{
             id: poster
-            source: "../../resources/poster.jpg"
+            source: Resources.get("poster.jpg")
             sourceSize: Qt.size(source_rect.width, source_rect.height)
 
             Rectangle{

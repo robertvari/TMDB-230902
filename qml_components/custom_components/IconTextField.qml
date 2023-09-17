@@ -16,7 +16,7 @@ TextField{
     }
 
     Image{
-        source: icon
+        source: Resources.get(icon)
         sourceSize: Qt.size(20, 20)
         opacity: 0.3
         y: 2
