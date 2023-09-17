@@ -7,7 +7,7 @@ Item{
         anchors.fill: parent
         cellWidth: 184
         cellHeight: 386
-        model: 50
+        model: MovieList
         clip: true
 
         delegate: MovieCard{
