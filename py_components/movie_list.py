@@ -1,5 +1,5 @@
 from typing import Optional
-from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt, QUrl
 import tmdbsimple as tmdb
 tmdb.API_KEY = '83cbec0139273280b9a3f8ebc9e35ca9'
 tmdb.REQUESTS_TIMEOUT = 5
@@ -31,6 +31,10 @@ class MovieList(QAbstractListModel):
                 "vote_average": vote_average,
                 "poster_path": poster_path
             })
+    
+    def _cache_poster(self, poster_url):
+        
+        return QUrl().fromLocalFile(full_path)
 
     def rowCount(self, parent=QModelIndex) -> int:
         return len(self._movies)
