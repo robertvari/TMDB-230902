@@ -20,14 +20,14 @@ Rectangle{
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
 
-                onClicked: print("Home")
+                onClicked: main_layout.state = "movie-list"
             }
         }
 
-        TextButton{text: "Movies"}
-        TextButton{text: "TV Shows"}
-        TextButton{text: "People"}
-        TextButton{text: "More"}
+        TextButton{text: "Movies"; onClicked: main_layout.state = "movie-list"}
+        TextButton{text: "TV Shows"; onClicked: main_layout.state = "tv-shows-list"}
+        TextButton{text: "People"; onClicked: main_layout.state = "people-list"}
+        TextButton{text: "More"; onClicked: main_layout.state = "more"}
         
         // Spacer
         Item{Layout.fillWidth: true}
