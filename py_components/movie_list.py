@@ -17,7 +17,20 @@ class MovieList(QAbstractListModel):
         self._fetch()
     
     def _fetch(self):
-        pass
+        movies = tmdb.Movies()
+        popular_movies = movies.popular(page=1)["results"]
+        for i in popular_movies:
+            title = i.get("title")
+            release_date = i.get("release_date")
+            vote_average = i.get("vote_average") * 10
+            poster_path = f"{POSTER_ROOT_PATH}{i.get('poster_path')}"
+
+            self._movies.append({
+                "title": title,
+                "release_date": release_date,
+                "vote_average": vote_average,
+                "poster_path": poster_path
+            })
 
     def rowCount(self, parent=QModelIndex) -> int:
         return len(self._movies)
