@@ -3,6 +3,14 @@ import Qt5Compat.GraphicalEffects
 import QtQuick.Layouts
 
 Item{
+    id: root
+
+    property string title: "Movie Title"
+    property string release_date: "Date"
+    property int popularity: 100
+    property var poster
+
+
     Rectangle{
         id: source_rect
         anchors.fill: parent
@@ -12,7 +20,7 @@ Item{
 
         Image{
             id: poster
-            source: Resources.get("poster.jpg")
+            source: poster
             sourceSize: Qt.size(source_rect.width, source_rect.height)
 
             Rectangle{
@@ -24,6 +32,10 @@ Item{
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: -25
                 x: 10
+
+                Text{
+                    text: root.popularity
+                }
             }
         }
 
@@ -39,13 +51,13 @@ Item{
                 anchors.margins: 10
 
                 SubtitleText{
-                    text: "Indiana Jones and the Dial of Destiny"
+                    text: root.title
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     Layout.fillWidth: movie_details_container.width
                 }
 
                 Text{
-                    text: "28 Jun 2023"
+                    text: root.release_date
                     opacity: 0.5
                 }
             }

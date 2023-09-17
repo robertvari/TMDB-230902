@@ -41,4 +41,4 @@ class MovieList(QAbstractListModel):
             return self._movies[row]
     
     def roleNames(self):
-        return {MovieList.DataRole: b"data"}
+        return {MovieList.DataRole: b"movie_data"}

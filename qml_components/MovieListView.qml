@@ -13,6 +13,11 @@ Item{
         delegate: MovieCard{
             width: grid_view.cellWidth - 10
             height: grid_view.cellHeight - 10
+            
+            title: movie_data.title
+            release_date: movie_data.release_date
+            popularity: movie_data.vote_average
+            poster: movie_data.poster_path
         }
     }
 }
