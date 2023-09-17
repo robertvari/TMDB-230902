@@ -1,5 +1,6 @@
 from typing import Optional
 from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt, QUrl
+from py_components.resources import get_image_from_url
 import tmdbsimple as tmdb
 tmdb.API_KEY = '83cbec0139273280b9a3f8ebc9e35ca9'
 tmdb.REQUESTS_TIMEOUT = 5
@@ -23,7 +24,7 @@ class MovieList(QAbstractListModel):
             title = i.get("title")
             release_date = i.get("release_date")
             vote_average = i.get("vote_average") * 10
-            poster_path = f"{POSTER_ROOT_PATH}{i.get('poster_path')}"
+            poster_path = get_image_from_url(f"{POSTER_ROOT_PATH}{i.get('poster_path')}")
 
             self._movies.append({
                 "title": title,
@@ -31,10 +32,8 @@ class MovieList(QAbstractListModel):
                 "vote_average": vote_average,
                 "poster_path": poster_path
             })
-    
-    def _cache_poster(self, poster_url):
         
-        return QUrl().fromLocalFile(full_path)
+        pass
 
     def rowCount(self, parent=QModelIndex) -> int:
         return len(self._movies)

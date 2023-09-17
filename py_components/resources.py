@@ -16,6 +16,8 @@ class Resources(QObject):
 
 
 def get_image_from_url(url):
+    
+
     # create cache folder
     if not os.path.exists(CACHE_FOLDER):
         os.makedirs(CACHE_FOLDER)
@@ -25,6 +27,7 @@ def get_image_from_url(url):
 
     # if image exists return with a QUrl
     if os.path.exists(image_path):
+        print(f"Get: {image_path}")
         return QUrl().fromLocalFile(image_path)
     
     assert requests.get(url).status_code == 200, f"BAD REQUEST: {url}"
@@ -33,6 +36,7 @@ def get_image_from_url(url):
     with open(image_path, "wb") as f:
         f.write(img_data)
 
+    print(f"Downloading: {url}")
     return QUrl().fromLocalFile(image_path) 
 
 if __name__ == "__main__":
