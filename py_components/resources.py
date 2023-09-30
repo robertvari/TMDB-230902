@@ -27,7 +27,7 @@ def get_image_from_url(url):
 
     # if image exists return with a QUrl
     if os.path.exists(image_path):
-        print(f"Get: {image_path}")
+        # print(f"Get: {image_path}")
         return QUrl().fromLocalFile(image_path)
     
     assert requests.get(url).status_code == 200, f"BAD REQUEST: {url}"

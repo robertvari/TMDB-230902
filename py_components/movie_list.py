@@ -20,7 +20,7 @@ class MovieList(QAbstractListModel):
 
         self._job_pool = QThreadPool()
         self._job_pool.setMaxThreadCount(1)
-        self._movie_list_worker = MovieListWorker()
+        self._movie_list_worker = MovieListWorker(max_pages=10)
 
         self._fetch()
     
@@ -55,7 +55,7 @@ class MovieList(QAbstractListModel):
         return self._movie_list_worker.current_count
     
     def _get_download_max_count(self):
-        return 20
+        return self._movie_list_worker.max_pages * 20
 
     is_downloading = Property(bool, _get_is_downloading, notify=download_progress_changed)
     download_current_value = Property(int, _get_download_current_value, notify=download_progress_changed)
@@ -69,12 +69,13 @@ class WorkerSignals(QObject):
         super().__init__()
 
 class MovieListWorker(QRunnable):
-    def __init__(self):
+    def __init__(self, max_pages):
         super().__init__()
         self.signals = WorkerSignals()
         self.movies = tmdb.Movies()
         self.working = False
         self.current_count = 0
+        self.max_pages = max_pages
 
     def run(self):
         self.current_count = 0
@@ -83,18 +84,21 @@ class MovieListWorker(QRunnable):
         self.working = False
 
     def _fetch(self):
-        popular_movies = self.movies.popular(page=1)["results"]
-        for i in popular_movies:
-            time.sleep(0.5)
-            title = i.get("title")
-            release_date = i.get("release_date")
-            vote_average = i.get("vote_average") * 10
-            poster_path = get_image_from_url(f"{POSTER_ROOT_PATH}{i.get('poster_path')}")
+        for page in range(1, self.max_pages+1):
+            print(f"Get movies from page {page}")
 
-            self.current_count += 1
-            self.signals.task_finished.emit({
-                "title": title,
-                "release_date": release_date,
-                "vote_average": vote_average,
-                "poster_path": poster_path
-            })            
+            popular_movies = self.movies.popular(page=page)["results"]
+
+            for i in popular_movies:
+                title = i.get("title")
+                release_date = i.get("release_date")
+                vote_average = i.get("vote_average") * 10
+                poster_path = get_image_from_url(f"{POSTER_ROOT_PATH}{i.get('poster_path')}")
+
+                self.current_count += 1
+                self.signals.task_finished.emit({
+                    "title": title,
+                    "release_date": release_date,
+                    "vote_average": vote_average,
+                    "poster_path": poster_path
+                })            
