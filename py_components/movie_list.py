@@ -1,5 +1,5 @@
 from typing import Optional
-from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt, QObject, QRunnable, Signal, QThreadPool
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt, QObject, QRunnable, Signal, QThreadPool, Property
 from py_components.resources import get_image_from_url
 import tmdbsimple as tmdb
 tmdb.API_KEY = '83cbec0139273280b9a3f8ebc9e35ca9'
@@ -10,6 +10,7 @@ POSTER_ROOT_PATH = "https://image.tmdb.org/t/p/w300"
 
 class MovieList(QAbstractListModel):
     DataRole = Qt.UserRole
+    download_progress_changed = Signal()
 
     def __init__(self):
         super().__init__()
@@ -41,6 +42,11 @@ class MovieList(QAbstractListModel):
     def roleNames(self):
         return {MovieList.DataRole: b"movie_data"}
     
+    def _get_is_downloading(self):
+        return self._movie_list_worker.working
+
+    is_downloading = Property(bool, _get_is_downloading, notify=download_progress_changed)
+
 
 class WorkerSignals(QObject):
     task_finished = Signal(dict)
@@ -48,15 +54,17 @@ class WorkerSignals(QObject):
     def __init__(self):
         super().__init__()
 
-
 class MovieListWorker(QRunnable):
     def __init__(self):
         super().__init__()
         self.signals = WorkerSignals()
         self.movies = tmdb.Movies()
+        self.working = False
 
     def run(self):
+        self.working = True
         self._fetch()
+        self.working = False
 
     def _fetch(self):
         popular_movies = self.movies.popular(page=1)["results"]
