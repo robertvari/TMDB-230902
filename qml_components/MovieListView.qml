@@ -8,7 +8,7 @@ Item{
         anchors.fill: parent
         cellWidth: 184
         cellHeight: 386
-        model: MovieList
+        model: MovieListProxy
         clip: true
 
         delegate: MovieCard{

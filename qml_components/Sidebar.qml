@@ -27,6 +27,7 @@ Item{
                     placeholderText: "Search..."
                     icon: "search_icon.svg"
                     Layout.fillWidth: true
+                    onTextEdited: MovieListProxy.set_search(text)
                 }
             }
         }
@@ -70,8 +71,10 @@ Item{
                     TextButton{
                         text: modelData
                         color: "black"
-                        font.bold: false
+                        font.bold: MovieListProxy.current_genre == text? true : false
                         font.pixelSize: 16
+
+                        onClicked: MovieListProxy.current_genre = text
                     }
                 }
             }

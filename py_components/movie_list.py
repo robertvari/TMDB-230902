@@ -1,8 +1,20 @@
 from typing import Optional
-from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt, QObject, QRunnable, Signal, QThreadPool, Property
+
+from PySide6.QtCore import (
+    QAbstractListModel, 
+    QModelIndex, 
+    Qt, 
+    QObject, 
+    QRunnable, 
+    Signal, 
+    QThreadPool, 
+    Property, 
+    QSortFilterProxyModel,
+    Slot
+)
+
 from py_components.resources import get_image_from_url
 import tmdbsimple as tmdb
-import time
 from datetime import datetime
 
 tmdb.API_KEY = '83cbec0139273280b9a3f8ebc9e35ca9'
@@ -25,6 +37,10 @@ class MovieList(QAbstractListModel):
 
         self._fetch()
     
+    @property
+    def movies(self):
+        return self._movies
+
     def _fetch(self):
         self.download_progress_changed.emit()
 
@@ -62,12 +78,55 @@ class MovieList(QAbstractListModel):
     download_current_value = Property(int, _get_download_current_value, notify=download_progress_changed)
     download_max_count = Property(int, _get_download_max_count, notify=download_progress_changed)
 
+class MovieListProxy(QSortFilterProxyModel):
+    genre_changed = Signal()
+
+    def __init__(self):
+        super().__init__()
+        self.sort(0, Qt.AscendingOrder)
+
+        self._title_filter = ""
+        self._genre = None
+
+    @Slot(str)
+    def set_search(self, search_string):
+        if len(search_string) == 0:
+            self._title_filter = ""
+            return
+        
+        self._title_filter = search_string
+        self.invalidateFilter()
+
+
+    def filterAcceptsRow(self, source_row, source_parent):
+        moive_data = self.sourceModel().movies[source_row]
+        if self._genre:
+            return (self._title_filter.lower() in moive_data.get("title")) and (self._genre in moive_data.get("genres"))
+        
+        return self._title_filter.lower() in moive_data.get("title").lower()
+
+    def _get_current_genre(self):
+        return self._genre
+    
+    def _set_current_genre(self, new_genre):
+        if new_genre == self._genre:
+            self._genre = None
+        else:
+            self._genre = new_genre
+        
+        self.invalidateFilter()
+        self.genre_changed.emit()
+
+
+    current_genre = Property(str, _get_current_genre, _set_current_genre, notify=genre_changed)
+
 
 class WorkerSignals(QObject):
     task_finished = Signal(dict)
 
     def __init__(self):
         super().__init__()
+
 
 class MovieListWorker(QRunnable):
     def __init__(self, max_pages):
