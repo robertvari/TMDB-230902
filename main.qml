@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Controls.Material
 import "qml_components"
+import "qml_components/custom_components"
 
 ApplicationWindow{
     visible: true
@@ -34,6 +35,9 @@ ApplicationWindow{
         ]
 
         Navbar{Layout.fillWidth: true}
+
+        // Progressbar
+        DownloadProgress{Layout.fillWidth: true}
         
         Item{ // Movie List view
             id: movie_list_view

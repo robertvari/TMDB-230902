@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import "custom_components"
 
 Item{
