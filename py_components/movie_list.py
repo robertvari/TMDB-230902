@@ -112,4 +112,4 @@ class MovieListWorker(QRunnable):
                     "vote_average": vote_average,
                     "poster_path": poster_path,
                     "genres": self._get_genres(i.get("genre_ids"))
-                })  
+                })
