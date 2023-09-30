@@ -92,11 +92,12 @@ class MovieListWorker(QRunnable):
                 release_date = i.get("release_date")
                 vote_average = i.get("vote_average") * 10
                 poster_path = get_image_from_url(f"{POSTER_ROOT_PATH}{i.get('poster_path')}")
-
+                
                 self.current_count += 1
                 self.signals.task_finished.emit({
                     "title": title,
                     "release_date": release_date,
                     "vote_average": vote_average,
-                    "poster_path": poster_path
-                })            
+                    "poster_path": poster_path,
+                    "genres": []
+                })  
