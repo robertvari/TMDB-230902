@@ -110,6 +110,6 @@ class MovieListWorker(QRunnable):
                     "display_date": release_date.strftime("%Y %B %d"),
                     "sort_date": release_date,
                     "vote_average": vote_average,
-                    "poster": poster_path,
+                    "poster_path": poster_path,
                     "genres": self._get_genres(i.get("genre_ids"))
                 })  
