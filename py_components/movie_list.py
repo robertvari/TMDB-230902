@@ -51,7 +51,15 @@ class MovieList(QAbstractListModel):
     def _get_is_downloading(self):
         return self._movie_list_worker.working
 
+    def _get_download_current_value(self):
+        return self._movie_list_worker.current_count
+    
+    def _get_download_max_count(self):
+        return 20
+
     is_downloading = Property(bool, _get_is_downloading, notify=download_progress_changed)
+    download_current_value = Property(int, _get_download_current_value, notify=download_progress_changed)
+    download_max_count = Property(int, _get_download_max_count, notify=download_progress_changed)
 
 
 class WorkerSignals(QObject):
@@ -66,8 +74,10 @@ class MovieListWorker(QRunnable):
         self.signals = WorkerSignals()
         self.movies = tmdb.Movies()
         self.working = False
+        self.current_count = 0
 
     def run(self):
+        self.current_count = 0
         self.working = True
         self._fetch()
         self.working = False
@@ -81,6 +91,7 @@ class MovieListWorker(QRunnable):
             vote_average = i.get("vote_average") * 10
             poster_path = get_image_from_url(f"{POSTER_ROOT_PATH}{i.get('poster_path')}")
 
+            self.current_count += 1
             self.signals.task_finished.emit({
                 "title": title,
                 "release_date": release_date,

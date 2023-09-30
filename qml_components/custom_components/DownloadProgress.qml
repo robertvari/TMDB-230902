@@ -5,8 +5,8 @@ Item{
     implicitHeight: 10
     visible: MovieList.is_downloading
 
-    property int max_value: 20
-    property int current_value: 10
+    property int max_value: MovieList.download_max_count
+    property int current_value: MovieList.download_current_value
 
     Rectangle{
         height: root.height
