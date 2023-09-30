@@ -3,7 +3,7 @@ import QtQuick
 Item{
     id: root
     implicitHeight: 10
-    visible: true
+    visible: MovieList.is_downloading
 
     property int max_value: 20
     property int current_value: 10
