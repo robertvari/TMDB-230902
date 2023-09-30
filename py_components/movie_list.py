@@ -85,8 +85,6 @@ class MovieListWorker(QRunnable):
 
     def _fetch(self):
         for page in range(1, self.max_pages+1):
-            print(f"Get movies from page {page}")
-
             popular_movies = self.movies.popular(page=page)["results"]
 
             for i in popular_movies:

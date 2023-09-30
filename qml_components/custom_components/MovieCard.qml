@@ -23,24 +23,7 @@ Item{
             source: root.poster
             sourceSize: Qt.size(source_rect.width, source_rect.height)
 
-            Rectangle{
-                id: popularity_progress
-                width: 50
-                height: 50
-                radius: width
-                color: "black"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: -25
-                x: 10
-
-                Text{
-                    anchors.centerIn: parent
-                    text: root.popularity
-                    font.bold: true
-                    font.pixelSize: 24
-                    color: "white"
-                }
-            }
+            PopularityProgress{popularity: root.popularity}
         }
 
         Item{
