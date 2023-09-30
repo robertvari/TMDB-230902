@@ -16,7 +16,7 @@ Item{
             height: grid_view.cellHeight - 10
             
             title: movie_data.title
-            release_date: movie_data.release_date
+            release_date: movie_data.display_date
             popularity: movie_data.vote_average
             poster: movie_data.poster_path
         }
