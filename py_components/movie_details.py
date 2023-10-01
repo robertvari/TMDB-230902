@@ -54,6 +54,12 @@ class MovieDetails(QObject):
         d, h, m = str(t_delta).split(":")
 
         return f"{int(h)}h {int(m)}m"
+    
+    def _get_vote_average(self):
+        return 60
+    
+    def _get_backdrop(self):
+        return QUrl()
 
     title = Property(str, _get_title, notify=movie_changed)
     overview = Property(str, _get_overview, notify=movie_changed)
@@ -61,4 +67,6 @@ class MovieDetails(QObject):
     genres = Property(str, _get_genres, notify=movie_changed)
     poster = Property(QUrl, _get_poster, notify=movie_changed)
     release_date = Property(str, _get_release_date, notify=movie_changed)
-    runtime = Property(str, _get_runtime, notify=movie_changed) 
+    runtime = Property(str, _get_runtime, notify=movie_changed)
+    vote_average = Property(int, _get_vote_average, notify=movie_changed)
+    backdrop = Property(QUrl, _get_backdrop, notify=movie_changed)

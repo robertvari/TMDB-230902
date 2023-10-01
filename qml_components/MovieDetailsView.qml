@@ -36,8 +36,22 @@ Rectangle{
             text: MovieDetails.runtime
         }
 
+        Item{
+            implicitWidth: 50
+            implicitHeight: 50
+
+            PopularityProgress{
+                popularity: MovieDetails.vote_average
+            }
+        }
+
+
         Image{
             source: MovieDetails.poster
+        }
+
+        Image{
+            source: MovieDetails.backdrop
         }
     }
 
