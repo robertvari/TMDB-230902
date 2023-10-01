@@ -46,7 +46,7 @@ Item{
                 
                 // ComboBox for sorting
                 ComboBox{
-                    model: ["Popularity Descending", "Popularity Ascending", "Rating Descending", "Rating Ascending", "Release Date Descending", "Release Date Ascending", "Title (A-Z)", "Title (Z-A)"]
+                    model: MovieListProxy.sorting_options
                     Layout.fillWidth: true
                 }
             }
@@ -66,7 +66,7 @@ Item{
                 // Genre filters
 
                 Repeater{
-                    model: ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy"]
+                    model: MovieList.genres
 
                     TextButton{
                         text: modelData

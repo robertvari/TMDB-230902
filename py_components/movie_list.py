@@ -74,9 +74,13 @@ class MovieList(QAbstractListModel):
     def _get_download_max_count(self):
         return self._movie_list_worker.max_pages * 20
 
+    def _get_genres(self):
+        return self._movie_list_worker.genres
+
     is_downloading = Property(bool, _get_is_downloading, notify=download_progress_changed)
     download_current_value = Property(int, _get_download_current_value, notify=download_progress_changed)
     download_max_count = Property(int, _get_download_max_count, notify=download_progress_changed)
+    genres = Property(list, _get_genres, constant=True)
 
 class MovieListProxy(QSortFilterProxyModel):
     genre_changed = Signal()
@@ -87,12 +91,13 @@ class MovieListProxy(QSortFilterProxyModel):
 
         self._title_filter = ""
         self._genre = None
+        self._sorting_options = ["Rating Descending", "Rating Ascending", "Release Date Descending", "Release Date Ascending", "Title (A-Z)", "Title (Z-A)"]
+        self._current_sorting = self._sorting_options[0]
 
     @Slot(str)
     def set_search(self, search_string):        
         self._title_filter = search_string
         self.invalidateFilter()
-
 
     def filterAcceptsRow(self, source_row, source_parent):
         moive_data = self.sourceModel().movies[source_row]
@@ -120,8 +125,11 @@ class MovieListProxy(QSortFilterProxyModel):
         self.invalidateFilter()
         self.genre_changed.emit()
 
+    def _get_sorting_options(self):
+        return self._sorting_options
 
     current_genre = Property(str, _get_current_genre, _set_current_genre, notify=genre_changed)
+    sorting_options = Property(list, _get_sorting_options, constant=True)
 
 
 class WorkerSignals(QObject):
@@ -143,6 +151,10 @@ class MovieListWorker(QRunnable):
         self._movie_genres = {}
         for i in tmdb.Genres().movie_list()["genres"]:
             self._movie_genres[i.get("id")] = i.get("name")
+    
+    @property
+    def genres(self):
+        return list(self._movie_genres.values())
 
     def run(self):
         self.current_count = 0
