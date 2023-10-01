@@ -17,6 +17,7 @@ for page in range(1, 10):
         release_date = datetime.strptime(i.get("release_date"), "%Y-%m-%d")
         vote_average = i.get("vote_average") * 10
         poster_path = get_image_from_url(f"{POSTER_ROOT_PATH}{i.get('poster_path')}")
+        id = i.get("id")
 
         movie_list.append({
             "id": i.get("id"),
@@ -26,5 +27,3 @@ for page in range(1, 10):
             "vote_average": vote_average,
             "poster_path": poster_path
         })
-
-pass
