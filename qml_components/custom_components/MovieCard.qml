@@ -9,6 +9,7 @@ Item{
     property string release_date: "Date"
     property int popularity: 100
     property var poster
+    property int movie_id
 
 
     Rectangle{
@@ -64,7 +65,10 @@ Item{
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
 
-        onClicked: main_layout.state = "movie-details"
+        onClicked: {
+            main_layout.state = "movie-details"
+            MovieDetails.set_movie(root.movie_id)
+        }
     }
 }
 

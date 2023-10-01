@@ -215,6 +215,7 @@ class MovieListWorker(QRunnable):
 
                 self.current_count += 1
                 self.signals.task_finished.emit({
+                    "id": i.get("id"),
                     "title": title,
                     "display_date": release_date.strftime("%Y %B %d"),
                     "sort_date": release_date,

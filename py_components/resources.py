@@ -16,8 +16,6 @@ class Resources(QObject):
 
 
 def get_image_from_url(url):
-    
-
     # create cache folder
     if not os.path.exists(CACHE_FOLDER):
         os.makedirs(CACHE_FOLDER)

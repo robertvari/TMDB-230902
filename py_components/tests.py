@@ -1,6 +1,3 @@
-def slice_long_text(text, max_length):
-    if len(text) > max_length:
-        return f"{text[:max_length]}..."
-    return text
+genres = ["Action", "Adventure", "Thriler"]
 
-print(slice_long_text("Creation of the Gods I: Kingdom of Storms", 20))
+print(", ".join(genres))

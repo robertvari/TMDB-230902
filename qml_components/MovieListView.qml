@@ -19,6 +19,7 @@ Item{
             release_date: movie_data.display_date
             popularity: movie_data.vote_average
             poster: movie_data.poster_path
+            movie_id: movie_data.id
         }
     }
 }
