@@ -4,55 +4,73 @@ import "custom_components"
 
 Rectangle{
     id: root
-    color: "lightGreen"
+    color: "black"
 
-    ColumnLayout{
+    Image{
+        source: MovieDetails.backdrop
         width: parent.width
+        height: parent.height
+        fillMode: Image.PreserveAspectCrop
+        opacity: 0.3
+    }
 
-        Text{
-            text: MovieDetails.title
-            font.pixelSize: 60
-        }
-
-        SubtitleText{
-            text: MovieDetails.tagline
-        }
-
-        Text{
-            text: MovieDetails.overview
-            Layout.fillWidth: true
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-        }
-
-        Text{
-            text: MovieDetails.genres
-        }
-
-        Text{
-            text: MovieDetails.release_date
-        }
-
-        Text{
-            text: MovieDetails.runtime
-        }
-
-        Item{
-            implicitWidth: 50
-            implicitHeight: 50
-
-            PopularityProgress{
-                popularity: MovieDetails.vote_average
-            }
-        }
-
+    RowLayout{
+        id: main_layout
+        width: root.width
 
         Image{
             source: MovieDetails.poster
         }
 
-        Image{
-            source: MovieDetails.backdrop
+        ColumnLayout{
+            Text{
+                text: MovieDetails.title
+                font.pixelSize: 60
+                color: "white"
+            }
+
+            RowLayout{
+                SubtitleText{
+                    text: MovieDetails.release_date
+                    color: "white"
+                }
+
+                SubtitleText{text: " - "; color: "white"}
+
+                SubtitleText{
+                    text: MovieDetails.genres
+                    color: "white"
+                }
+
+                SubtitleText{text: " - "; color: "white"}
+
+                SubtitleText{
+                    text: MovieDetails.runtime
+                    color: "white"
+                }
+            }
+
+            SubtitleText{
+                text: MovieDetails.tagline
+                color: "white"
+            }
+
+            SubtitleText{
+                text: "Overview"
+                color: "white"
+            }
+
+            Text{
+                text: MovieDetails.overview
+                Layout.fillWidth: true
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                color: "white"
+                font.pixelSize: 18
+            }
+
+            Item{
+                Layout.fillHeight: true
+            }
         }
     }
-
 }

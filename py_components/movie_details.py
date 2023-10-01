@@ -62,6 +62,10 @@ class MovieDetails(QObject):
         if not self._movie_data:
             return ""
         backdrop_url = self._movie_data.get("backdrop_path")
+
+        if not backdrop_url:
+            return ""
+        
         backdrop_server_path = f"https://image.tmdb.org/t/p/w1920_and_h800_multi_faces"
         return get_image_from_url(f"{backdrop_server_path}{backdrop_url}")
 
