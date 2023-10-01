@@ -33,7 +33,7 @@ class MovieList(QAbstractListModel):
 
         self._job_pool = QThreadPool()
         self._job_pool.setMaxThreadCount(1)
-        self._movie_list_worker = MovieListWorker(max_pages=10)
+        self._movie_list_worker = MovieListWorker(max_pages=1)
 
         self._fetch()
     
@@ -89,21 +89,24 @@ class MovieListProxy(QSortFilterProxyModel):
         self._genre = None
 
     @Slot(str)
-    def set_search(self, search_string):
-        if len(search_string) == 0:
-            self._title_filter = ""
-            return
-        
+    def set_search(self, search_string):        
         self._title_filter = search_string
         self.invalidateFilter()
 
 
     def filterAcceptsRow(self, source_row, source_parent):
         moive_data = self.sourceModel().movies[source_row]
-        if self._genre:
-            return (self._title_filter.lower() in moive_data.get("title")) and (self._genre in moive_data.get("genres"))
+        result = True
         
-        return self._title_filter.lower() in moive_data.get("title").lower()
+        # filter out by title
+        if self._title_filter.lower() not in moive_data.get("title").lower():
+            result = False
+
+        # filter out by genre
+        if self._genre and self._genre not in moive_data.get("genres"):
+            result = False
+
+        return result
 
     def _get_current_genre(self):
         return self._genre
