@@ -55,6 +55,15 @@ Rectangle{
                 color: "white"
             }
 
+            Rectangle{
+                implicitWidth: 50
+                implicitHeight: 50
+
+                PopularityProgress{
+                    popularity: MovieDetails.vote_average
+                }
+            }
+
             SubtitleText{
                 text: "Overview"
                 color: "white"

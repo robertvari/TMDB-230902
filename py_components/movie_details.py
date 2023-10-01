@@ -56,7 +56,10 @@ class MovieDetails(QObject):
         return f"{int(h)}h {int(m)}m"
     
     def _get_vote_average(self):
-        return 60
+        if not self._movie_data:
+            return 0
+        
+        return self._movie_data.get("vote_average") * 10
     
     def _get_backdrop(self):
         if not self._movie_data:
