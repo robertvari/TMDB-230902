@@ -30,7 +30,7 @@ Item{
             id: movie_details_container
             width: parent.width
             anchors.top: poster.bottom
-            anchors.topMargin: 25
+            anchors.topMargin: 10
             anchors.bottom: source_rect.bottom
 
             ColumnLayout{

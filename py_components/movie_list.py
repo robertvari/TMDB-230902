@@ -198,11 +198,17 @@ class MovieListWorker(QRunnable):
         return [self._movie_genres[i] for i in genre_id_list]
 
     def _fetch(self):
+        def slice_long_text(text, max_length):
+            if len(text) > max_length:
+                return f"{text[:max_length]}..."
+            return text
+
+
         for page in range(1, self.max_pages+1):
             popular_movies = self.movies.popular(page=page)["results"]
 
             for i in popular_movies:
-                title = i.get("title")
+                title = slice_long_text(i.get("title"), 40)
                 release_date = datetime.strptime(i.get("release_date"), "%Y-%m-%d")
                 vote_average = i.get("vote_average") * 10
                 poster_path = get_image_from_url(f"{POSTER_ROOT_PATH}{i.get('poster_path')}")
