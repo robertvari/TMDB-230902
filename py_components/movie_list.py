@@ -33,7 +33,7 @@ class MovieList(QAbstractListModel):
 
         self._job_pool = QThreadPool()
         self._job_pool.setMaxThreadCount(1)
-        self._movie_list_worker = MovieListWorker(max_pages=1)
+        self._movie_list_worker = MovieListWorker(max_pages=10)
 
         self._fetch()
     
@@ -124,6 +124,14 @@ class MovieListProxy(QSortFilterProxyModel):
             return left_movie["vote_average"] > right_movie["vote_average"]
         elif self._current_sorting == self._sorting_options[1]:
             return left_movie["vote_average"] < right_movie["vote_average"]
+        elif self._current_sorting == self._sorting_options[2]:
+            return left_movie["sort_date"] > right_movie["sort_date"]
+        elif self._current_sorting == self._sorting_options[3]:
+            return left_movie["sort_date"] < right_movie["sort_date"]
+        elif self._current_sorting == self._sorting_options[4]:
+            return left_movie["title"] < right_movie["title"]
+        elif self._current_sorting == self._sorting_options[5]:
+            return left_movie["title"] > right_movie["title"]
 
     def _get_current_genre(self):
         return self._genre
