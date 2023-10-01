@@ -100,6 +100,8 @@ class MovieListProxy(QSortFilterProxyModel):
         self._title_filter = search_string
         self.invalidateFilter()
 
+
+
     def filterAcceptsRow(self, source_row, source_parent):
         moive_data = self.sourceModel().movies[source_row]
         result = True
@@ -113,6 +115,15 @@ class MovieListProxy(QSortFilterProxyModel):
             result = False
 
         return result
+
+    def lessThan(self, source_left, source_right):
+        left_movie = self.sourceModel().data(source_left, Qt.UserRole)
+        right_movie = self.sourceModel().data(source_right, Qt.UserRole)
+        
+        if self._current_sorting == self._sorting_options[0]:
+            return left_movie["vote_average"] > right_movie["vote_average"]
+        elif self._current_sorting == self._sorting_options[1]:
+            return left_movie["vote_average"] < right_movie["vote_average"]
 
     def _get_current_genre(self):
         return self._genre
@@ -136,7 +147,7 @@ class MovieListProxy(QSortFilterProxyModel):
         self._current_sorting = new_sorting
         self.sorting_changed.emit()
         self.invalidate()
-        
+
     current_genre = Property(str, _get_current_genre, _set_current_genre, notify=genre_changed)
     sorting_options = Property(list, _get_sorting_options, constant=True)
     current_sorting = Property(str, _get_current_sorting, _set_current_sorting, notify=sorting_changed)
