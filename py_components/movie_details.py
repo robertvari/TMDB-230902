@@ -59,7 +59,11 @@ class MovieDetails(QObject):
         return 60
     
     def _get_backdrop(self):
-        return QUrl()
+        if not self._movie_data:
+            return ""
+        backdrop_url = self._movie_data.get("backdrop_path")
+        backdrop_server_path = f"https://image.tmdb.org/t/p/w1920_and_h800_multi_faces"
+        return get_image_from_url(f"{backdrop_server_path}{backdrop_url}")
 
     title = Property(str, _get_title, notify=movie_changed)
     overview = Property(str, _get_overview, notify=movie_changed)

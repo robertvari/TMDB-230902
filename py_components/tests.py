@@ -9,4 +9,4 @@ movie = tmdb.Movies(278)
 movie_data = movie.info()
 backdrop_url = movie_data.get("backdrop_path")
 
-print(f"{BACKDROP_URL}{backdrop_url}")
+print(resources.get_image_from_url(f"{BACKDROP_URL}{backdrop_url}"))
