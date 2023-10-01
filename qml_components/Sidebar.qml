@@ -48,6 +48,8 @@ Item{
                 ComboBox{
                     model: MovieListProxy.sorting_options
                     Layout.fillWidth: true
+
+                    onActivated: MovieListProxy.current_sorting = currentText
                 }
             }
         }

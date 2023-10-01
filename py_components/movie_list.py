@@ -84,6 +84,7 @@ class MovieList(QAbstractListModel):
 
 class MovieListProxy(QSortFilterProxyModel):
     genre_changed = Signal()
+    sorting_changed = Signal()
 
     def __init__(self):
         super().__init__()
@@ -128,8 +129,17 @@ class MovieListProxy(QSortFilterProxyModel):
     def _get_sorting_options(self):
         return self._sorting_options
 
+    def _get_current_sorting(self):
+        return self._current_sorting
+    
+    def _set_current_sorting(self, new_sorting):
+        self._current_sorting = new_sorting
+        self.sorting_changed.emit()
+        self.invalidate()
+        
     current_genre = Property(str, _get_current_genre, _set_current_genre, notify=genre_changed)
     sorting_options = Property(list, _get_sorting_options, constant=True)
+    current_sorting = Property(str, _get_current_sorting, _set_current_sorting, notify=sorting_changed)
 
 
 class WorkerSignals(QObject):
