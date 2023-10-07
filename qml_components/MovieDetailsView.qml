@@ -55,12 +55,13 @@ Rectangle{
                 color: "white"
             }
 
-            Rectangle{
+            Item{
                 implicitWidth: 50
                 implicitHeight: 50
 
                 PopularityProgress{
                     popularity: MovieDetails.vote_average
+                    anchors.centerIn: parent
                 }
             }
 
